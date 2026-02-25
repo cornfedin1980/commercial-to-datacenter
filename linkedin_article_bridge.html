@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LinkedIn Article: Commercial RE → Data Center</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Mono:wght@300;400;500&family=Newsreader:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink: #12100e;
+    --paper: #f7f4ef;
+    --cream: #ede9e1;
+    --accent: #b84a1a;
+    --steel: #1c2d3f;
+    --muted: #7a6f63;
+    --border: #d6cfc4;
+    --highlight: #fff8e1;
+  }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Newsreader', Georgia, serif;
+    font-size: 18px;
+    line-height: 1.75;
+    min-height: 100vh;
+  }
+
+  /* Grain overlay */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+  }
+
+  /* === HEADER === */
+  .masthead {
+    background: var(--steel);
+    padding: 14px 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .masthead-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.5);
+  }
+
+  .masthead-badge {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    border: 1px solid var(--accent);
+    padding: 4px 12px;
+  }
+
+  /* === HERO === */
+  .hero {
+    background: var(--steel);
+    padding: 72px 48px 80px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 320px; height: 320px;
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 50%;
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -80px; right: 80px;
+    width: 200px; height: 200px;
+    border: 1px solid rgba(255,255,255,0.04);
+    border-radius: 50%;
+  }
+
+  .hero-inner {
+    max-width: 760px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
+    animation: fadeUp 0.8s ease both;
+  }
+
+  .hero-category {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .hero-category::before {
+    content: '';
+    width: 28px;
+    height: 1px;
+    background: var(--accent);
+  }
+
+  .hero-title {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: clamp(36px, 5.5vw, 58px);
+    font-weight: 900;
+    line-height: 1.08;
+    color: #fff;
+    margin-bottom: 28px;
+    letter-spacing: -0.01em;
+  }
+
+  .hero-title em {
+    font-style: italic;
+    color: rgba(255,255,255,0.7);
+  }
+
+  .hero-deck {
+    font-family: 'Newsreader', serif;
+    font-size: 20px;
+    font-weight: 300;
+    font-style: italic;
+    line-height: 1.6;
+    color: rgba(255,255,255,0.72);
+    max-width: 600px;
+    margin-bottom: 40px;
+  }
+
+  .hero-meta {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+
+  .author-block {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .author-avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent), #d4621f);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'DM Mono', monospace;
+    font-weight: 500;
+    font-size: 15px;
+    color: white;
+    flex-shrink: 0;
+  }
+
+  .author-info {
+    font-family: 'DM Mono', monospace;
+  }
+
+  .author-name {
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    color: rgba(255,255,255,0.9);
+    font-weight: 500;
+  }
+
+  .author-title {
+    font-size: 10px;
+    letter-spacing: 0.06em;
+    color: rgba(255,255,255,0.45);
+    margin-top: 2px;
+  }
+
+  .pub-date {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.35);
+  }
+
+  /* === ARTICLE BODY === */
+  .article-container {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 72px 48px 96px;
+  }
+
+  /* Drop cap */
+  .article-body > p:first-of-type::first-letter {
+    font-family: 'Playfair Display', serif;
+    font-size: 76px;
+    font-weight: 900;
+    float: left;
+    line-height: 0.82;
+    margin: 10px 12px 0 0;
+    color: var(--accent);
+  }
+
+  .article-body p {
+    margin-bottom: 1.6em;
+    color: #1e1a16;
+  }
+
+  /* Section breaks */
+  .section-head {
+    margin: 56px 0 24px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .section-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    color: var(--accent);
+    flex-shrink: 0;
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--steel);
+    line-height: 1.2;
+  }
+
+  .section-rule {
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* Pull quote */
+  .pull-quote {
+    margin: 48px -24px;
+    padding: 36px 40px;
+    background: var(--steel);
+    position: relative;
+  }
+
+  .pull-quote::before {
+    content: '"';
+    font-family: 'Playfair Display', serif;
+    font-size: 120px;
+    line-height: 0.7;
+    color: var(--accent);
+    position: absolute;
+    top: 20px;
+    left: 24px;
+    opacity: 0.4;
+  }
+
+  .pull-quote p {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 400;
+    font-style: italic;
+    line-height: 1.5;
+    color: rgba(255,255,255,0.92) !important;
+    margin-bottom: 0 !important;
+    padding-left: 16px;
+  }
+
+  /* Metrics bar */
+  .metrics-strip {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    border: 1.5px solid var(--border);
+    margin: 48px 0;
+  }
+
+  .metric-cell {
+    padding: 28px 24px;
+    border-right: 1px solid var(--border);
+    text-align: center;
+  }
+
+  .metric-cell:last-child { border-right: none; }
+
+  .metric-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 40px;
+    font-weight: 900;
+    color: var(--accent);
+    display: block;
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+
+  .metric-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    line-height: 1.4;
+  }
+
+  /* Callout box */
+  .callout {
+    background: var(--highlight);
+    border-left: 4px solid var(--accent);
+    padding: 24px 28px;
+    margin: 40px 0;
+  }
+
+  .callout-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 10px;
+  }
+
+  .callout p {
+    font-size: 16px;
+    line-height: 1.65;
+    margin-bottom: 0 !important;
+    color: #2a2218 !important;
+  }
+
+  /* Transfer table */
+  .transfer-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 40px 0;
+    font-size: 15px;
+  }
+
+  .transfer-table thead tr {
+    background: var(--steel);
+  }
+
+  .transfer-table thead th {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.6);
+    padding: 14px 18px;
+    text-align: left;
+    font-weight: 400;
+  }
+
+  .transfer-table thead th:first-child {
+    color: rgba(255,255,255,0.4);
+  }
+
+  .transfer-table tbody tr {
+    border-bottom: 1px solid var(--border);
+    transition: background 0.15s;
+  }
+
+  .transfer-table tbody tr:hover {
+    background: var(--cream);
+  }
+
+  .transfer-table tbody td {
+    padding: 16px 18px;
+    vertical-align: top;
+    color: #2a2218;
+    line-height: 1.5;
+    font-size: 14.5px;
+  }
+
+  .transfer-table tbody td:first-child {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    white-space: nowrap;
+    width: 120px;
+  }
+
+  .arrow-cell {
+    color: var(--accent);
+    font-size: 18px;
+    text-align: center;
+    width: 40px;
+  }
+
+  /* CTA block */
+  .article-cta {
+    margin-top: 72px;
+    padding: 40px 44px;
+    background: var(--steel);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 32px;
+    flex-wrap: wrap;
+  }
+
+  .cta-copy {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-style: italic;
+    color: rgba(255,255,255,0.85);
+    max-width: 440px;
+    line-height: 1.45;
+  }
+
+  .cta-copy span {
+    color: #fff;
+    font-style: normal;
+    font-weight: 700;
+  }
+
+  .cta-link {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #fff;
+    background: var(--accent);
+    padding: 14px 28px;
+    text-decoration: none;
+    display: inline-block;
+    flex-shrink: 0;
+    transition: background 0.2s;
+  }
+
+  .cta-link:hover { background: #d4561f; }
+
+  /* Footer tags */
+  .article-tags {
+    margin-top: 48px;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .tag-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-right: 4px;
+  }
+
+  .tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    color: var(--steel);
+    border: 1px solid var(--border);
+    padding: 5px 12px;
+  }
+
+  .divider {
+    width: 48px;
+    height: 3px;
+    background: var(--accent);
+    margin: 32px 0;
+  }
+
+  strong {
+    font-weight: 700;
+    color: var(--steel);
+  }
+
+  em {
+    font-style: italic;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (max-width: 640px) {
+    .hero { padding: 48px 24px 56px; }
+    .article-container { padding: 48px 24px 72px; }
+    .masthead { padding: 12px 24px; }
+    .metrics-strip { grid-template-columns: 1fr; }
+    .metric-cell { border-right: none; border-bottom: 1px solid var(--border); }
+    .metric-cell:last-child { border-bottom: none; }
+    .pull-quote { margin: 40px -8px; }
+    .article-cta { flex-direction: column; }
+    .transfer-table tbody td:first-child { white-space: normal; width: auto; }
+  }
+</style>
+</head>
+<body>
+
+<!-- MASTHEAD -->
+<div class="masthead">
+  <div class="masthead-label">Featured Article · LinkedIn</div>
+  <div class="masthead-badge">Infrastructure PM Series</div>
+</div>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="hero-inner">
+    <div class="hero-category">Construction &amp; Capital Delivery</div>
+    <h1 class="hero-title">What a $30M Real Estate<br>Recovery <em>Taught Me</em><br>About Data Centers</h1>
+    <p class="hero-deck">The building type changed. The governance principles didn't.</p>
+    <div class="hero-meta">
+      <div class="author-block">
+        <div class="author-avatar">CS</div>
+        <div class="author-info">
+          <div class="author-name">Cornell D. Shephard, PMP</div>
+          <div class="author-title">Infrastructure PM · Fractional & Advisory Available</div>
+        </div>
+      </div>
+      <div class="pub-date">February 2026 · 6 min read</div>
+    </div>
+  </div>
+</header>
+
+<!-- ARTICLE BODY -->
+<main class="article-container">
+  <div class="article-body">
+
+    <p>Three years ago, I inherited a troubled $30M commercial development in Anna, Texas — the Canvas at Anna project. The schedule was deteriorating. The amenity center scope had cost exposure nobody had formally documented. Subcontractors were working off different versions of the sequence. There was no formal risk register. The project had momentum, but it was the wrong kind.</p>
+
+    <p>What I did next has nothing to do with real estate. And everything to do with why I'm now building a practice in data center delivery infrastructure.</p>
+
+    <div class="metrics-strip">
+      <div class="metric-cell">
+        <span class="metric-num">18%</span>
+        <span class="metric-label">Schedule slippage<br>reduction</span>
+      </div>
+      <div class="metric-cell">
+        <span class="metric-num">$500K</span>
+        <span class="metric-label">Budget preserved<br>through scope realignment</span>
+      </div>
+      <div class="metric-cell">
+        <span class="metric-num">≤5%</span>
+        <span class="metric-label">Budget variance<br>at close</span>
+      </div>
+    </div>
+
+    <!-- SECTION 1 -->
+    <div class="section-head">
+      <span class="section-num">01</span>
+      <h2 class="section-title">The Systems Transfer No One Talks About</h2>
+      <div class="section-rule"></div>
+    </div>
+
+    <p>When people hear "commercial real estate" and "data center delivery" in the same sentence, they assume a wide gap. Different asset class. Different MEP complexity. Different risk profile. And honestly — they're not wrong about the asset class.</p>
+
+    <p>But they're wrong about what delivery actually requires.</p>
+
+    <p>At Canvas at Anna, I rebuilt the schedule from the critical path backward. I implemented daily structured standups across six subcontractor teams. I built a risk register tracking every open item, prioritized by severity and owner. I ran formal weekly reviews with the commissioning-adjacent stakeholders. I surfaced the $500K cost exposure in the amenity center before it became a change order crisis — through scope realignment and procurement restructuring, not scope reduction.</p>
+
+    <p>Every single one of those moves is <strong>how you run a data center program</strong>.</p>
+
+    <div class="pull-quote">
+      <p>Governance isn't a product of the building type. It's a discipline you either have or you don't — and it transfers completely.</p>
+    </div>
+
+    <!-- SECTION 2 -->
+    <div class="section-head">
+      <span class="section-num">02</span>
+      <h2 class="section-title">The Actual Overlap Is Larger Than You Think</h2>
+      <div class="section-rule"></div>
+    </div>
+
+    <p>I've spent the last several months immersed in data center delivery — studying the operators, the construction workflows, the commissioning frameworks. What I found surprised me: the structural DNA is nearly identical to high-complexity commercial construction. The vocabulary shifts. The stakes escalate. The tolerance for schedule variance drops to near zero. But the underlying mechanics?</p>
+
+    <table class="transfer-table">
+      <thead>
+        <tr>
+          <th>Discipline</th>
+          <th>Commercial RE</th>
+          <th style="width:36px;"></th>
+          <th>Data Center</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Schedule governance</td>
+          <td>Critical path rebuilds, daily standups, trade sequencing</td>
+          <td class="arrow-cell">→</td>
+          <td>Same methodology. Tighter tolerances. More concurrent workstreams.</td>
+        </tr>
+        <tr>
+          <td>MEP coordination</td>
+          <td>RFIs, submittals, pre-installation meetings, systems verification</td>
+          <td class="arrow-cell">→</td>
+          <td>Identical workflow. Higher consequence for sequencing failures.</td>
+        </tr>
+        <tr>
+          <td>Risk management</td>
+          <td>Live registers, severity scoring, weekly executive reviews</td>
+          <td class="arrow-cell">→</td>
+          <td>Same tools. Risk register is your primary document, not a formality.</td>
+        </tr>
+        <tr>
+          <td>Commissioning prep</td>
+          <td>Systems verification, punch management, stakeholder coordination</td>
+          <td class="arrow-cell">→</td>
+          <td>More structured, more credentialed — but same underlying discipline.</td>
+        </tr>
+        <tr>
+          <td>Budget governance</td>
+          <td>Cost exposure identification, EVM, proactive variance reporting</td>
+          <td class="arrow-cell">→</td>
+          <td>Identical. Owners expect ≤5% variance. So do I.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>The gap is real, not imaginary. High-voltage electrical systems at hyperscale density are different from commercial MEP — and I'm not pretending otherwise. That's exactly why I'm completing the Associate Commissioning Professional credential through BCxA and pursuing the NERC System Operator certification. <strong>The credentials are doing the technical bridging work. The governance systems already transferred.</strong></p>
+
+    <!-- SECTION 3 -->
+    <div class="section-head">
+      <span class="section-num">03</span>
+      <h2 class="section-title">What Mission-Critical Is Really Asking For</h2>
+      <div class="section-rule"></div>
+    </div>
+
+    <p>Here's what I've observed after dozens of conversations with data center owners, GCs, and developers: the pain is rarely technical. The pain is operational.</p>
+
+    <p>Projects fall apart because nobody owns the risk register. Nobody is running structured standups with accountability. Schedule slippage compounds because nobody rebuilt the critical path when the first delay hit. Commissioning gets compressed because the pre-Cx planning wasn't owned early enough. The MEP is fine — it's the delivery governance that failed.</p>
+
+    <p>That's a project management problem. And it's one I've been solving for ten-plus years.</p>
+
+    <div class="callout">
+      <div class="callout-label">The Pattern</div>
+      <p>Every program I've been brought into has the same fingerprint: good intentions, smart people, and a governance gap that nobody wanted to own. My job is to close that gap — fast, formally, and with documentation the owner can stand behind.</p>
+    </div>
+
+    <p>At Canvas at Anna, the recovery wasn't glamorous. It was disciplined. Daily standups. A risk register that actually got reviewed. A schedule rebuilt from constraints, not from optimism. Executive visibility into the right three metrics, not thirty. That recovery earned two follow-on project requests from the GC executive team — not because of the asset class, but because of the execution model.</p>
+
+    <!-- SECTION 4 -->
+    <div class="section-head">
+      <span class="section-num">04</span>
+      <h2 class="section-title">What I'm Building Now</h2>
+      <div class="section-rule"></div>
+    </div>
+
+    <p>I left my last W-2 role in November 2025. Instead of immediately updating my resume, I built something. I formalized the delivery operating system I'd been running informally for years — risk cadence frameworks, AI-enabled status reporting, reusable commissioning readiness templates, a sequencing logic model that works across project types.</p>
+
+    <p>I'm now pursuing fractional PM and advisory engagements in data center and mission-critical infrastructure — specifically for owners and developers who need senior program oversight without a full-time W-2 hire. The ACP credential and NERC SOC are in progress. The delivery discipline has been operational for a decade.</p>
+
+    <p>If you're a developer, owner, or GC working on mission-critical projects in Texas or beyond — and you've got a program that needs tighter governance, earlier risk visibility, or commissioning coordination that's actually owned — I want to talk.</p>
+
+    <div class="divider"></div>
+
+    <p>The building type changed. The governance didn't.<br>That's the bridge.</p>
+
+  </div>
+
+  <!-- CTA -->
+  <div class="article-cta">
+    <div class="cta-copy">
+      Open to <span>fractional PM engagements</span> and advisory relationships in data center and mission-critical infrastructure.
+    </div>
+    <a class="cta-link" href="mailto:cshephard0381@gmail.com">DM or Connect →</a>
+  </div>
+
+  <!-- TAGS -->
+  <div class="article-tags">
+    <span class="tag-label">Topics</span>
+    <span class="tag">#DataCenter</span>
+    <span class="tag">#InfrastructurePM</span>
+    <span class="tag">#ProjectManagement</span>
+    <span class="tag">#Commissioning</span>
+    <span class="tag">#AIWorkflows</span>
+    <span class="tag">#MissionCritical</span>
+  </div>
+
+</main>
+
+</body>
+</html>
